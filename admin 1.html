@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html><head>
+<meta charset="utf-8"/>
+<link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+<link as="style" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter%3Awght%40400%3B500%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900" onload="this.rel='stylesheet'" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<title>Data Collection App - Submissions</title>
+<link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style type="text/tailwindcss">
+    :root {
+      --primary-color: #38e07b;
+      --secondary-color: #e6ffe6;
+      --background-color: #f8fff8;
+      --text-primary: #1a1a1a;
+      --text-secondary: #4d4d4d;
+      --accent-color: #2cc26a;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--background-color);
+      color: var(--text-primary);
+    }
+    .group:focus-within .group-focus-within\:flex {
+        display: flex;
+    }
+  </style>
+</head>
+<body class="bg-[var(--background-color)] text-[var(--text-primary)]">
+<div class="relative flex size-full min-h-screen flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<header class="flex items-center justify-between whitespace-nowrap border-b border-gray-200 px-10 py-4 bg-white">
+<div class="flex items-center gap-4">
+<div class="size-8 text-[var(--primary-color)]">
+<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M24 4H6V17.3333V30.6667H24V44H42V30.6667V17.3333H24V4Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-[var(--text-primary)] text-xl font-bold leading-tight tracking-[-0.015em]">Data Collection App</h2>
+</div>
+<div class="flex items-center gap-8">
+<nav class="flex items-center gap-6">
+<a class="text-[var(--text-secondary)] hover:text-[var(--text-primary)] text-sm font-medium leading-normal transition-colors" href="data_entry_form.html">Data Entry</a>
+<a class="text-[var(--text-primary)] text-sm font-medium leading-normal" href="admin 1.html">Submissions</a>
+<a class="text-[var(--text-secondary)] hover:text-[var(--text-primary)] text-sm font-medium leading-normal transition-colors" href="login.html">Logout</a>
+</nav>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAwzwBvtXq8GdXcn-2CkN_ZoEc5UHutXm_wdO3WO_vamEOK2-pYhMb_hHSpDJguqel3ZxYoD8A-AiQ-0Rq7boGHNR9uAOi2kAv5V_KC6m1YY3fBs1Lo-fNZqcFGfWtMlfyZLRm_ky5YqU3NL90p4O7s9u-2A24yzTfdw1HjxaL_rTDJShiz7Xam_uKLK-uxMLGiEwpMaoyezECrNtT12l1UnvOZ3y93Jnv0Tx15YcRjA6NoIugLd_PtPMKtkyU8Mvl7Wa8pML3U7vg5");'></div>
+</div>
+</header>
+<main class="container mx-auto px-4 py-8 max-w-7xl">
+<div class="mb-8">
+<h1 class="text-4xl font-bold text-[var(--text-primary)] mb-2">Submissions</h1>
+<p class="text-base text-[var(--text-secondary)] leading-relaxed">View and manage your submitted data.</p>
+<button onclick="showDebugInfo()" class="mt-2 text-xs text-gray-500 hover:text-gray-700 underline">
+Debug Info
+</button>
+</div>
+<div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+<div class="relative w-full sm:w-auto sm:max-w-xs">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"> search </span>
+<input id="search-input" class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)] focus:border-transparent transition-colors" placeholder="Search entries..." type="text"/>
+</div>
+<div class="flex items-center gap-4">
+<button onclick="refreshData()" class="flex items-center gap-2 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-200 ease-in-out">
+<span class="material-symbols-outlined text-base">refresh</span>
+Refresh
+</button>
+<button onclick="exportData()" class="flex items-center gap-2 bg-[var(--primary-color)] text-white py-2 px-4 rounded-md hover:bg-[var(--accent-color)] focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)] focus:ring-opacity-50 transition duration-200 ease-in-out">
+<span class="material-symbols-outlined text-base">download</span>
+Export CSV
+</button>
+<div class="relative group">
+<button class="flex items-center gap-2 bg-transparent border border-gray-300 text-[var(--text-secondary)] py-2 px-4 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)] focus:ring-opacity-50 transition duration-200 ease-in-out">
+<span class="material-symbols-outlined text-base"> filter_list </span>
+                    Filter
+                </button>
+<div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 hidden group-focus-within:block">
+<a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#">UC Name</a>
+<a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#">UC Number</a>
+<a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#">Submission Date</a>
+</div>
+</div>
+<div class="relative group">
+<button class="flex items-center gap-2 bg-transparent border border-gray-300 text-[var(--text-secondary)] py-2 px-4 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)] focus:ring-opacity-50 transition duration-200 ease-in-out">
+<span class="material-symbols-outlined text-base"> sort </span>
+                    Sort
+                </button>
+<div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 hidden group-focus-within:block">
+<a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#">UC Name (A-Z)</a>
+<a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#">UC Name (Z-A)</a>
+<a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#">Date (Newest)</a>
+<a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#">Date (Oldest)</a>
+</div>
+</div>
+</div>
+</div>
+<div class="overflow-x-auto">
+<div class="min-w-full bg-white rounded-lg shadow-md border border-gray-200">
+<table class="min-w-full divide-y divide-gray-200">
+<thead class="bg-gray-50">
+<tr>
+<th class="px-6 py-3 text-left text-xs font-medium text-[var(--text-secondary)] uppercase tracking-wider" scope="col">UC Name</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-[var(--text-secondary)] uppercase tracking-wider" scope="col">UC Number</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-[var(--text-secondary)] uppercase tracking-wider" scope="col">LHW Name</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-[var(--text-secondary)] uppercase tracking-wider" scope="col">Household Name</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-[var(--text-secondary)] uppercase tracking-wider" scope="col">Location</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-[var(--text-secondary)] uppercase tracking-wider" scope="col">Timestamp</th>
+<th class="relative px-6 py-3" scope="col">
+<span class="sr-only">View</span>
+</th>
+</tr>
+</thead>
+<tbody id="submissions-table-body" class="bg-white divide-y divide-gray-200">
+<!-- Data will be loaded from Firebase -->
+<tr id="loading-row">
+<td colspan="7" class="px-6 py-8 text-center text-[var(--text-secondary)]">
+<div class="flex items-center justify-center">
+<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-[var(--primary-color)]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+<path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+</svg>
+Loading submissions...
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</main>
+</div>
+</div>
+
+<script src="main.js" type="module"></script>
+<script type="module">
+  let allSubmissions = [];
+  let filteredSubmissions = [];
+  
+  document.addEventListener('DOMContentLoaded', async () => {
+    console.log('Admin panel loaded');
+    
+    // Check if user is logged in
+    const userData = localStorage.getItem('userData');
+    if (!userData) {
+      alert('Please login to access admin panel');
+      window.location.href = 'login.html';
+      return;
+    }
+    
+    // Wait for Firebase to be ready
+    await waitForFirebase();
+    
+    // Load submissions data
+    await loadSubmissions();
+    
+    // Setup event listeners
+    setupEventListeners();
+  });
+  
+  async function waitForFirebase() {
+    return new Promise((resolve) => {
+      if (window.firebaseApp) {
+        resolve();
+      } else {
+        window.addEventListener('firebaseReady', resolve, { once: true });
+        // Fallback timeout
+        setTimeout(() => {
+          if (window.firebaseApp) resolve();
+        }, 2000);
+      }
+    });
+  }
+  
+  async function loadSubmissions() {
+    try {
+      console.log('Loading submissions from Firebase...');
+      
+      if (!window.firebaseApp || !window.firebaseApp.db) {
+        throw new Error('Firebase not properly initialized');
+      }
+      
+      const { db, collection, getDocs } = window.firebaseApp;
+      
+      console.log('Firebase objects available:', { db: !!db, collection: !!collection, getDocs: !!getDocs });
+      
+      const submissionsRef = collection(db, 'formSubmissions');
+      const querySnapshot = await getDocs(submissionsRef);
+      
+      allSubmissions = [];
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        console.log('Document data:', data);
+        allSubmissions.push({
+          id: doc.id,
+          ...data
+        });
+      });
+      
+      console.log('Total submissions loaded:', allSubmissions.length);
+      
+      // Sort by date (newest first)
+      allSubmissions.sort((a, b) => {
+        const dateA = new Date(a.submittedAt || a.timestamp?.toDate?.() || 0);
+        const dateB = new Date(b.submittedAt || b.timestamp?.toDate?.() || 0);
+        return dateB - dateA;
+      });
+      
+      filteredSubmissions = [...allSubmissions];
+      renderSubmissions();
+      
+    } catch (error) {
+      console.error('Error loading submissions:', error);
+      showErrorInTable(`Failed to load submissions: ${error.message}. Please check console for details.`);
+    }
+  }
+  
+  function renderSubmissions() {
+    const tbody = document.getElementById('submissions-table-body');
+    
+    console.log('Rendering submissions. Count:', filteredSubmissions.length);
+    
+    if (filteredSubmissions.length === 0) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="7" class="px-6 py-8 text-center text-[var(--text-secondary)]">
+            <div class="space-y-2">
+              <div>No submissions found.</div>
+              <button onclick="refreshData()" class="text-blue-500 hover:text-blue-700 underline">
+                Click here to refresh
+              </button>
+            </div>
+          </td>
+        </tr>
+      `;
+      return;
+    }
+    
+    tbody.innerHTML = filteredSubmissions.map((submission, index) => {
+      console.log(`Rendering submission ${index + 1}:`, submission);
+      
+      const date = submission.submittedAt ? 
+        new Date(submission.submittedAt).toLocaleString() : 
+        submission.timestamp?.toDate?.()?.toLocaleString() || 'N/A';
+      
+      return `
+        <tr class="hover:bg-gray-50">
+          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-[var(--text-primary)]">
+            ${submission.ucName || 'N/A'}
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-[var(--text-secondary)]">
+            ${submission.ucNumber || 'N/A'}
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-[var(--text-secondary)]">
+            ${submission.lhwName || 'N/A'}
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-[var(--text-secondary)]">
+            ${submission.householdName || 'N/A'}
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-[var(--text-secondary)]">
+            ${submission.location || submission.currentLocation || 'N/A'}
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-[var(--text-secondary)]">
+            ${date}
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+            <button onclick="viewDetails('${submission.id}')" class="text-[var(--primary-color)] hover:text-[var(--accent-color)] mr-3">
+              View Details
+            </button>
+            <button onclick="deleteSubmission('${submission.id}')" class="text-red-500 hover:text-red-700">
+              Delete
+            </button>
+          </td>
+        </tr>
+      `;
+    }).join('');
+    
+    console.log('Submissions rendered successfully');
+  }
+  
+  function showErrorInTable(message) {
+    const tbody = document.getElementById('submissions-table-body');
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="7" class="px-6 py-8 text-center text-red-500">
+          ${message}
+        </td>
+      </tr>
+    `;
+  }
+  
+  function setupEventListeners() {
+    // Search functionality
+    const searchInput = document.getElementById('search-input');
+    searchInput.addEventListener('input', (e) => {
+      const searchTerm = e.target.value.toLowerCase();
+      filteredSubmissions = allSubmissions.filter(submission => {
+        return (
+          (submission.ucName || '').toLowerCase().includes(searchTerm) ||
+          (submission.ucNumber || '').toLowerCase().includes(searchTerm) ||
+          (submission.lhwName || '').toLowerCase().includes(searchTerm) ||
+          (submission.householdName || '').toLowerCase().includes(searchTerm) ||
+          (submission.location || submission.currentLocation || '').toLowerCase().includes(searchTerm)
+        );
+      });
+      renderSubmissions();
+    });
+  }
+  
+  // Global functions for button clicks
+  window.refreshData = async function() {
+    console.log('Refreshing data...');
+    
+    // Show loading in table
+    const tbody = document.getElementById('submissions-table-body');
+    tbody.innerHTML = `
+      <tr id="loading-row">
+        <td colspan="7" class="px-6 py-8 text-center text-[var(--text-secondary)]">
+          <div class="flex items-center justify-center">
+            <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-[var(--primary-color)]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            Refreshing submissions...
+          </div>
+        </td>
+      </tr>
+    `;
+    
+    // Reload data
+    await loadSubmissions();
+  };
+  
+  window.viewDetails = function(submissionId) {
+    // Store the submission ID and redirect to details page
+    localStorage.setItem('currentSubmissionId', submissionId);
+    window.location.href = 'admin 2.html';
+  };
+  
+  window.deleteSubmission = function(submissionId) {
+    // Store the submission ID and redirect to delete confirmation
+    localStorage.setItem('deleteSubmissionId', submissionId);
+    window.location.href = 'admin 3.html';
+  };
+  
+  window.showDebugInfo = function() {
+    console.log('=== ADMIN PANEL DEBUG INFO ===');
+    console.log('Firebase App:', window.firebaseApp);
+    console.log('All Submissions:', allSubmissions);
+    console.log('Filtered Submissions:', filteredSubmissions);
+    console.log('User Data:', localStorage.getItem('userData'));
+    
+    let debugMsg = 'Debug Info:\n';
+    debugMsg += `Firebase Available: ${!!window.firebaseApp}\n`;
+    debugMsg += `Database: ${!!window.firebaseApp?.db}\n`;
+    debugMsg += `Total Submissions: ${allSubmissions.length}\n`;
+    debugMsg += `Filtered Submissions: ${filteredSubmissions.length}\n`;
+    debugMsg += `User Logged In: ${!!localStorage.getItem('userData')}\n`;
+    
+    alert(debugMsg);
+  };
+  
+  window.exportData = function() {
+    if (filteredSubmissions.length === 0) {
+      alert('No data to export');
+      return;
+    }
+    
+    // Create CSV content
+    const headers = ['UC Name', 'UC Number', 'LHW Name', 'Household Name', 'Location', 'Latitude', 'Longitude', 'Submitted By', 'Submission Date'];
+    const csvContent = [
+      headers.join(','),
+      ...filteredSubmissions.map(submission => [
+        submission.ucName || '',
+        submission.ucNumber || '',
+        submission.lhwName || '',
+        submission.householdName || '',
+        submission.location || submission.currentLocation || '',
+        submission.latitude || '',
+        submission.longitude || '',
+        submission.submittedBy?.displayName || '',
+        submission.submittedAt ? new Date(submission.submittedAt).toLocaleString() : ''
+      ].map(field => `"${field}"`).join(','))
+    ].join('\n');
+    
+    // Download CSV
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `submissions_${new Date().toISOString().split('T')[0]}.csv`;
+    link.click();
+    window.URL.revokeObjectURL(url);
+  };
+</script>
+
+</body></html>

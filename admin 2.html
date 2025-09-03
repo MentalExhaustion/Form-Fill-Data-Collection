@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Stitch Design</title>
+<link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<style type="text/tailwindcss">
+      :root {
+        --primary-color: #38e07b;
+        --secondary-color: #e0f7e9;
+        --background-color: #f8fcf9;
+        --text-primary: #1a1a1a;
+        --text-secondary: #4a4a4a;
+        --accent-color: #2cc26a;
+      }
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--background-color);
+        color: var(--text-primary);
+      }
+    </style>
+</head>
+<body class="antialiased">
+<div class="flex min-h-screen flex-col bg-[var(--background-color)]">
+<header class="sticky top-0 z-10 w-full border-b border-gray-200 bg-white">
+<div class="container mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+<div class="flex items-center gap-4">
+<div class="flex size-8 items-center justify-center rounded-lg bg-[var(--primary-color)] text-white">
+<span class="material-symbols-outlined"> data_usage </span>
+</div>
+<h2 class="text-xl font-bold text-[var(--text-primary)]">Data Collection App</h2>
+</div>
+<nav class="hidden items-center gap-8 md:flex">
+<a class="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)]" href="data_entry_form.html">Data Entry</a>
+<a class="text-sm font-medium text-[var(--text-primary)]" href="admin 1.html">Submissions</a>
+<a class="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)]" href="login.html">Logout</a>
+</nav>
+<div class="flex items-center gap-4">
+<div class="h-10 w-10 rounded-full bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBlbFhg90-jePythql2wSD9qNT5auagkbshL_HAG3WMnDcvPM3N5OVmWKWFbzaTIRD9cWfdnVKpg4rnaKZ_7YKARVCuYI1jhUVvOOE8f-cPASXQBgkcCG3eZDokVEeSdWwE5Mcf6ClTJNbsGz9JNm6OS0oVU32cI_7tUGcwg0SFSx8e4wAskP_EnRWDkhZA_r3y53JcTAWBqYVzl0JmBY4vzcd4mMY50He7pJuVqs_zHFzsFf3TaSo_Je_0kQ_58HHiegT8iKP4HShP");'></div>
+</div>
+</div>
+</header>
+<main class="container mx-auto max-w-7xl flex-1 px-4 py-8 sm:px-6 lg:px-8">
+<div class="mx-auto max-w-3xl">
+<div class="mb-8 flex items-center justify-between">
+<div>
+<h1 class="mb-1 text-3xl font-extrabold text-[var(--text-primary)]">Data Entry Details</h1>
+<p class="text-base text-[var(--text-secondary)]">View the complete information for this data submission.</p>
+</div>
+<button onclick="goBack()" class="flex items-center gap-2 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-[var(--text-primary)] shadow-sm hover:bg-gray-50">
+<span class="material-symbols-outlined text-base"> arrow_back </span>
+              Back to List
+            </button>
+</div>
+<div class="rounded-lg border border-gray-200 bg-white shadow-sm">
+<div class="p-6">
+<dl id="submission-details" class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
+<!-- Loading placeholder -->
+<div class="sm:col-span-2 text-center py-8">
+<div class="flex items-center justify-center">
+<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-[var(--primary-color)]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+<path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+</svg>
+Loading submission details...
+</div>
+</div>
+</dl>
+</div>
+<div class="flex items-center justify-end gap-4 border-t border-gray-200 bg-gray-50 px-6 py-4">
+<button onclick="editEntry()" class="flex items-center gap-2 rounded-md bg-[var(--primary-color)] px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors duration-200 hover:bg-[var(--accent-color)] focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)] focus:ring-opacity-75">
+<span class="material-symbols-outlined text-base"> edit </span>
+                Edit Entry
+              </button>
+<button onclick="deleteEntry()" class="flex items-center gap-2 rounded-md border border-red-500 bg-transparent px-4 py-2 text-sm font-semibold text-red-500 shadow-sm transition-colors duration-200 hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-75">
+<span class="material-symbols-outlined text-base"> delete </span>
+                Delete Entry
+              </button>
+</div>
+</div>
+</div>
+</main>
+</div>
+
+<script src="main.js" type="module"></script>
+<script type="module">
+  let currentSubmission = null;
+  
+  document.addEventListener('DOMContentLoaded', async () => {
+    console.log('Admin 2 (Details) loaded');
+    
+    // Check if user is logged in
+    const userData = localStorage.getItem('userData');
+    if (!userData) {
+      alert('Please login to access admin panel');
+      window.location.href = 'login.html';
+      return;
+    }
+    
+    // Get submission ID from localStorage
+    const submissionId = localStorage.getItem('currentSubmissionId');
+    if (!submissionId) {
+      alert('No submission selected');
+      window.location.href = 'admin 1.html';
+      return;
+    }
+    
+    // Wait for Firebase to be ready
+    await waitForFirebase();
+    
+    // Load submission details
+    await loadSubmissionDetails(submissionId);
+  });
+  
+  async function waitForFirebase() {
+    return new Promise((resolve) => {
+      if (window.firebaseApp) {
+        resolve();
+      } else {
+        window.addEventListener('firebaseReady', resolve, { once: true });
+        setTimeout(() => {
+          if (window.firebaseApp) resolve();
+        }, 2000);
+      }
+    });
+  }
+  
+  async function loadSubmissionDetails(submissionId) {
+    try {
+      console.log('Loading submission details for ID:', submissionId);
+      
+      if (!window.firebaseApp || !window.firebaseApp.db) {
+        throw new Error('Firebase not properly initialized');
+      }
+      
+      const { db, doc, getDoc } = window.firebaseApp;
+      
+      console.log('Firebase objects available:', { db: !!db, doc: !!doc, getDoc: !!getDoc });
+      
+      const submissionRef = doc(db, 'formSubmissions', submissionId);
+      const docSnap = await getDoc(submissionRef);
+      
+      if (docSnap.exists()) {
+        currentSubmission = {
+          id: docSnap.id,
+          ...docSnap.data()
+        };
+        
+        console.log('Loaded submission:', currentSubmission);
+        renderSubmissionDetails();
+      } else {
+        showError('Submission not found');
+      }
+      
+    } catch (error) {
+      console.error('Error loading submission:', error);
+      showError(`Failed to load submission details: ${error.message}`);
+    }
+  }
+  
+  function renderSubmissionDetails() {
+    const detailsContainer = document.getElementById('submission-details');
+    
+    const date = currentSubmission.submittedAt ? 
+      new Date(currentSubmission.submittedAt).toLocaleString() : 
+      currentSubmission.timestamp?.toDate?.()?.toLocaleString() || 'N/A';
+    
+    detailsContainer.innerHTML = `
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium uppercase tracking-wider text-[var(--text-secondary)]">UC Name</dt>
+        <dd class="mt-1 text-lg font-semibold text-[var(--text-primary)]">${currentSubmission.ucName || 'N/A'}</dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium uppercase tracking-wider text-[var(--text-secondary)]">UC Number</dt>
+        <dd class="mt-1 text-lg font-semibold text-[var(--text-primary)]">${currentSubmission.ucNumber || 'N/A'}</dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium uppercase tracking-wider text-[var(--text-secondary)]">Name of LHW</dt>
+        <dd class="mt-1 text-lg font-semibold text-[var(--text-primary)]">${currentSubmission.lhwName || 'N/A'}</dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium uppercase tracking-wider text-[var(--text-secondary)]">Name of Household</dt>
+        <dd class="mt-1 text-lg font-semibold text-[var(--text-primary)]">${currentSubmission.householdName || 'N/A'}</dd>
+      </div>
+      <div class="sm:col-span-2">
+        <dt class="text-sm font-medium uppercase tracking-wider text-[var(--text-secondary)]">Current Location</dt>
+        <dd class="mt-1 text-lg font-semibold text-[var(--text-primary)]">${currentSubmission.location || currentSubmission.currentLocation || 'N/A'}</dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium uppercase tracking-wider text-[var(--text-secondary)]">Latitude</dt>
+        <dd class="mt-1 text-lg font-semibold text-[var(--text-primary)]">${currentSubmission.latitude || 'N/A'}</dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium uppercase tracking-wider text-[var(--text-secondary)]">Longitude</dt>
+        <dd class="mt-1 text-lg font-semibold text-[var(--text-primary)]">${currentSubmission.longitude || 'N/A'}</dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium uppercase tracking-wider text-[var(--text-secondary)]">Submitted By</dt>
+        <dd class="mt-1 text-lg font-semibold text-[var(--text-primary)]">${currentSubmission.submittedBy?.displayName || 'N/A'}</dd>
+      </div>
+      <div class="sm:col-span-1">
+        <dt class="text-sm font-medium uppercase tracking-wider text-[var(--text-secondary)]">Timestamp</dt>
+        <dd class="mt-1 text-lg font-semibold text-[var(--text-primary)]">${date}</dd>
+      </div>
+    `;
+  }
+  
+  function showError(message) {
+    const detailsContainer = document.getElementById('submission-details');
+    detailsContainer.innerHTML = `
+      <div class="sm:col-span-2 text-center py-8">
+        <div class="text-red-500">${message}</div>
+        <button onclick="goBack()" class="mt-4 text-[var(--primary-color)] hover:text-[var(--accent-color)]">
+          Go back to list
+        </button>
+      </div>
+    `;
+  }
+  
+  // Global functions
+  window.goBack = function() {
+    window.location.href = 'admin 1.html';
+  };
+  
+  window.editEntry = function() {
+    alert('Edit functionality would open an edit form here');
+    // Future: Open edit modal or redirect to edit page
+  };
+  
+  window.deleteEntry = function() {
+    if (currentSubmission) {
+      localStorage.setItem('deleteSubmissionId', currentSubmission.id);
+      window.location.href = 'admin 3.html';
+    }
+  };
+</script>
+
+</body></html>
